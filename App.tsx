@@ -1,13 +1,13 @@
 import React from 'react';
-import { ChakraProvider } from '@chakra-ui/react';
+import { NativeBaseProvider } from 'native-base';
 
-import { SignIn } from './src/pages';
+import { SignIn } from './src/pages/SignIn';
 
 export default function App() {
   return (
-    <ChakraProvider>
+    <NativeBaseProvider>
       <SignIn />
-    </ChakraProvider>
+    </NativeBaseProvider>
   );
 }
 
