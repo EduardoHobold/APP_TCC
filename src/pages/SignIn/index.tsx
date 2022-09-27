@@ -36,11 +36,11 @@ export function SignIn() {
         <Center>
             <Box bg='primary.200' width='100%' height='100%'>
                 <Box>
-                    <Text textAlign='center' fontWeight='bold' fontSize='xl'>Testando Text</Text>
+                    <Text fontFamily="medium" textAlign='center' fontSize='20'>Teste Fonte Poppins</Text>
                 </Box>
                 <Box p='10'>
                     <Button shadow={2} onPress={handleSignInWithGoogle}>
-                        Click me
+                        <Text fontFamily="medium" textAlign='center' fontSize='20' color='white'>Login</Text>
                     </Button>
                 </Box>
             </Box>
