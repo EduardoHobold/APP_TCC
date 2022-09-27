@@ -2,7 +2,7 @@
   "expo": {
     "name": "apptcc",
     "slug": "apptcc",
-    "schema": "apptcc",
+    "scheme": "apptcc",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"

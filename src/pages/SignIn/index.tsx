@@ -34,7 +34,7 @@ export function SignIn() {
 
     return (
         <Center>
-            <Box bg='blue.400' width='100%' height='100%'>
+            <Box bg='primary.200' width='100%' height='100%'>
                 <Box>
                     <Text textAlign='center' fontWeight='bold' fontSize='xl'>Testando Text</Text>
                 </Box>
