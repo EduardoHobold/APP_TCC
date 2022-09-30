@@ -33,17 +33,25 @@ export function SignIn() {
     }
 
     return (
-        <Center>
-            <Box bg='primary.200' width='100%' height='100%'>
-                <Box>
-                    <Text fontFamily="medium" textAlign='center' fontSize='20'>Teste Fonte Poppins</Text>
-                </Box>
-                <Box p='10'>
-                    <Button shadow={2} onPress={handleSignInWithGoogle}>
-                        <Text fontFamily="medium" textAlign='center' fontSize='20' color='white'>Login</Text>
-                    </Button>
-                </Box>
+        <Box w='100%' h='100%'>
+            <Box bg='primary.default' w='100%' h='60%' justifyContent='center'>
+                <Text fontFamily="medium" textAlign='center' fontSize='20' color='text'>Teste primary color</Text>
             </Box>
-        </Center>
+            <Box bg='secondary.default' w='100%' h='40%'>
+                <Text fontFamily="medium" textAlign='center' fontSize='20' color='text'>Teste secondary color</Text>
+            </Box>
+        </Box>
+        // <Center>
+        //     <Box bg='primary.200' width='100%' height='100%'>
+        //         <Box>
+        //             <Text fontFamily="medium" textAlign='center' fontSize='20'>Teste Fonte Poppins</Text>
+        //         </Box>
+        //         <Box p='10'>
+        //             <Button shadow={2} onPress={handleSignInWithGoogle}>
+        //                 <Text fontFamily="medium" textAlign='center' fontSize='20' color='white'>Login</Text>
+        //             </Button>
+        //         </Box>
+        //     </Box>
+        // </Center>
     )
 }
