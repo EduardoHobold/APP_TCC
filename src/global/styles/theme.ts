@@ -1,27 +1,33 @@
 import { extendTheme } from 'native-base';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default {
     theme: extendTheme({
         colors: {
             primary: {
-                default: '#1d4fd7',
-                light: '#93c5fd'
+                default: '#6a1b9a',
+                light: '#9c4dcc',
+                dark: '#38006b'
             },
             secondary: {
-                default: '#f68c13',
-                light: '#fef08a'
+                default: '#009688',
+                light: '#52c7b8',
+                dark: '#00675b'
             },
             title: '#363F5F',
-            text: '#969CB2'
+            text: '#FFF',
+            text_dark: '#000'
 
-        },
-        config: {
-            initialColorMode: 'light'
         },
         fonts: {
             regular: 'Poppins_400Regular',
             medium: 'Poppins_500Medium',
             bold: 'Poppins_700Bold'
         }
-    })
+    }),
+    config: {
+        dependencies: {
+            'linear-gradient': LinearGradient
+        }
+    }
 }

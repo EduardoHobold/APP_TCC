@@ -34,12 +34,21 @@ export function SignIn() {
 
     return (
         <Box w='100%' h='100%'>
-            <Box bg='primary.default' w='100%' h='60%' justifyContent='center'>
-                <Text fontFamily="medium" textAlign='center' fontSize='20' color='text'>Teste primary color</Text>
+            <Box
+                bg={{
+                    linearGradient: {
+                        colors: ['primary.default', 'secondary.default'],
+                        start: [0.5, 0],
+                        end: [0, 1]
+                    }
+                }}
+                w='100%' h='100%' justifyContent='center'
+            >
+                <Text fontFamily="bold" textAlign='center' fontSize='36' color='text'>Teste primary color</Text>
             </Box>
-            <Box bg='secondary.default' w='100%' h='40%'>
+            {/* <Box bg='secondary.default' w='100%' h='40%'>
                 <Text fontFamily="medium" textAlign='center' fontSize='20' color='text'>Teste secondary color</Text>
-            </Box>
+            </Box> */}
         </Box>
         // <Center>
         //     <Box bg='primary.200' width='100%' height='100%'>

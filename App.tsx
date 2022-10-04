@@ -28,7 +28,7 @@ export default function App() {
     return <AppLoading />
   } else {
     return (
-      <NativeBaseProvider theme={theme.theme}>
+      <NativeBaseProvider theme={theme.theme} config={theme.config}>
         <StatusBar barStyle={'light-content'} />
         <AuthProvider>
           <Routes />
