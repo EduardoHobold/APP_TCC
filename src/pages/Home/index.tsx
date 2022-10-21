@@ -8,7 +8,6 @@ import ArrowSvg from '../../assets/arrow.svg';
 
 export function Home() {
     const { user, signOut } = useAuth();
-    const Test = geometricShapes[0].icon;
     return (
         <Center>
             <Box bg='primary.400' width='100%' height='100%'>
@@ -20,8 +19,13 @@ export function Home() {
                         <Text fontFamily="medium" textAlign='center' fontSize='20' color='white'>Deslogar</Text>
                     </Button>
                 </Box>
-                <ArrowSvg width={100} height={100} fill="#fff" />
-                {/* <Test width={100} height={100} fill="#fff" /> */}
+                {
+                    geometricShapes.map(Icon => {
+                        return(
+                            <Icon.svg width={100} height={100} fill="#fff"></Icon.svg>
+                        )
+                    })
+                }
             </Box>
         </Center>
     )
