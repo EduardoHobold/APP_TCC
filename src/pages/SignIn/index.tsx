@@ -45,10 +45,12 @@ export function SignIn() {
                 w='100%' h='100%' justifyContent='center'
             >
                 <Text fontFamily="bold" textAlign='center' fontSize='36' color='text'>Teste primary color</Text>
+                <Box p='10'>
+                    <Button shadow={2} onPress={handleSignInWithGoogle}>
+                        <Text fontFamily="medium" textAlign='center' fontSize='20' color='white'>Login</Text>
+                    </Button>
+                </Box>
             </Box>
-            {/* <Box bg='secondary.default' w='100%' h='40%'>
-                <Text fontFamily="medium" textAlign='center' fontSize='20' color='text'>Teste secondary color</Text>
-            </Box> */}
         </Box>
         // <Center>
         //     <Box bg='primary.200' width='100%' height='100%'>
