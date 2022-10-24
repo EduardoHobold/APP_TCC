@@ -2,6 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { AuthRoutes } from './auth.routes';
+import { AppRoutes } from './app.routes';
 // import { AppRoutes } from './app.routes';
 import { Home } from '../pages/Home';
 
@@ -12,7 +13,7 @@ export function Routes() {
 
     return (
         <NavigationContainer>
-            {user.id ? <Home /> : <AuthRoutes />}
+            {user.id ? <AppRoutes /> : <AuthRoutes />}
         </NavigationContainer>
     )
 }
