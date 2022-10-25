@@ -11,9 +11,8 @@ import {
   Poppins_700Bold
 } from '@expo-google-fonts/poppins';
 
-import theme from './src/global/styles/theme';
-
 import { AuthProvider, useAuth } from './src/hooks/auth';
+import { customTheme } from './src/global/styles/theme';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -28,7 +27,7 @@ export default function App() {
     return <AppLoading />
   } else {
     return (
-      <NativeBaseProvider theme={theme.theme} config={theme.config}>
+      <NativeBaseProvider theme={customTheme} config={customTheme.config}>
         <StatusBar barStyle={'light-content'} />
         <AuthProvider>
           <Routes />
