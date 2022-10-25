@@ -12,6 +12,9 @@ export function Results() {
                 <Box>
                     <Text fontFamily="regular" textAlign='center' fontSize='50'>Tela de Resultados</Text>
                 </Box>
+                <Box alignItems="center">
+                    <Button onPress={() => console.log("hello world")}>Click Me</Button>
+                </Box>
             </Box>
         </Center>
     )

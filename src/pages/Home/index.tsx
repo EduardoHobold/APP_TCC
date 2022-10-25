@@ -1,8 +1,11 @@
-import React, { FC } from 'react';
-import { Container, Text, Box, IconButton, Center, Avatar } from "native-base";
+import React from 'react';
+import { Button, Text, Box, IconButton, Center, Avatar } from "native-base";
 import { FlatList } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { useAuth } from '../../hooks/auth';
+
+import { HomeNavigationProp } from '../../routes/types';
 
 import { geometricShapes } from '../../utils/geometricShapes';
 import { SvgProps } from 'react-native-svg';
@@ -10,6 +13,7 @@ import { Feather } from '@expo/vector-icons';
 
 export function Home() {
     const { user, signOut } = useAuth();
+    const navigation = useNavigation<HomeNavigationProp>();
 
     interface IGeometricShape {
         id: string;
@@ -28,10 +32,10 @@ export function Home() {
 
     return (
         <Center>
-            <Box bg='backgroud'  width='100%' height='100%'>
+            <Box bg='backgroud' width='100%' height='100%'>
 
                 {/* Header */}
-                <Box bg='primary.default' flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'} p={5} >
+                <Box bg='primary.default' flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'} p={3} >
                     <Box flexDirection={'row'} alignItems={'center'}>
                         <Avatar alignSelf={'center'} size="lg"
                             source={{ uri: user.photo }}
@@ -49,8 +53,11 @@ export function Home() {
                     }} />
                 </Box>
 
+                <Box alignItems="center">
+                    <Button onPress={() => navigation.navigate('Atividades')}>Click Me</Button>
+                </Box>
 
-                <Box alignItems={'center'} >
+                {/* <Box alignItems={'center'} >
                     <FlatList
                         data={geometricShapes}
                         renderItem={({ item }) => <Item Item={item} />}
@@ -58,7 +65,7 @@ export function Home() {
                         numColumns={3}
                         refreshing={true}
                     />
-                </Box>
+                </Box> */}
             </Box>
         </Center>
     )
