@@ -2,16 +2,31 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { AntDesign, Feather, FontAwesome5 } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import { createStackNavigator } from '@react-navigation/stack';
 import { useTheme } from 'native-base';
+
+import { StackNavigatorParamList, BottomTabParamList } from './types';
+
 const { Navigator, Screen } = createBottomTabNavigator();
+const Stack = createStackNavigator<StackNavigatorParamList>();
 
 import { Home } from '../pages/Home';
 import { Profile } from '../pages/Profile';
 import { Results } from '../pages/Results';
+import { Activities } from '../pages/Activities';
+
+function HomeStack() {
+    return (
+        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='Inicio'>
+            <Stack.Screen name="Inicio" component={Home} />
+            <Stack.Screen name="Atividades" component={Activities} />
+        </Stack.Navigator>
+    );
+}
 
 export function AppRoutes() {
     const theme = useTheme();
+
     return (
         <Navigator
             screenOptions={{
@@ -27,8 +42,8 @@ export function AppRoutes() {
             }}
         >
             <Screen
-                name="Inicio"
-                component={Home}
+                name="Home"
+                component={HomeStack}
                 options={{
                     tabBarIcon: (({ size, color }) =>
                         <AntDesign
