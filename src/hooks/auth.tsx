@@ -45,6 +45,8 @@ function AuthProvider({ children }: AuthProviderProps) {
         try {
             const RESPONSE_TYPE = 'token';
             const SCOPE = encodeURI('profile email');
+            console.log('CLIENT_ID', CLIENT_ID);
+            console.log('REDIRECT_URI', REDIRECT_URI);
 
             const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
 
