@@ -1,34 +1,16 @@
 import React from 'react';
 import { Button, Text, Box, IconButton, Center, Avatar } from "native-base";
-import { FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { useAuth } from '../../hooks/auth';
 
 import { HomeNavigationProp } from '../../routes/types';
 
-import { geometricShapes } from '../../utils/geometricShapes';
-import { SvgProps } from 'react-native-svg';
 import { Feather } from '@expo/vector-icons';
 
 export function Home() {
     const { user, signOut } = useAuth();
     const navigation = useNavigation<HomeNavigationProp>();
-
-    interface IGeometricShape {
-        id: string;
-        name: string;
-        svg: React.FC<SvgProps>;
-        color: string;
-    }
-
-    const Item = ({ Item }: { Item: IGeometricShape }) => {
-        return (
-            <Box p={2} m={1} borderWidth={1} borderRadius={5} borderColor={'#000'}>
-                <Item.svg width={100} height={100} fill="grey"></Item.svg>
-            </Box>
-        );
-    };
 
     return (
         <Center>
@@ -53,19 +35,12 @@ export function Home() {
                     }} />
                 </Box>
 
-                <Box alignItems="center">
-                    <Button onPress={() => navigation.navigate('Atividades')}>Click Me</Button>
+                <Box alignItems={'center'}>
+                    <Button backgroundColor={'red.600'} w={200} h={200} mt={3} onPress={() => navigation.navigate('Atividades')}></Button>
+                    <Button backgroundColor={'blue.600'} w={200} h={200} mt={3} onPress={() => navigation.navigate('Atividades')}></Button>
+                    <Button backgroundColor={'green.600'} w={200} h={200} mt={3} onPress={() => navigation.navigate('Atividades')}></Button>
                 </Box>
-
-                {/* <Box alignItems={'center'} >
-                    <FlatList
-                        data={geometricShapes}
-                        renderItem={({ item }) => <Item Item={item} />}
-                        keyExtractor={(item) => item.id}
-                        numColumns={3}
-                        refreshing={true}
-                    />
-                </Box> */}
+                
             </Box>
         </Center>
     )
