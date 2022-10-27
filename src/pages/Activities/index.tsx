@@ -17,6 +17,7 @@ interface IGeometricShape {
 
 export function Activities() {
     const navigation = useNavigation<HomeNavigationProp>();
+    const [question, setQuestion] = useState<IGeometricShape>();
 
     // Controle de listas
     const [list, setList] = useState<IGeometricShape[]>([]);
@@ -31,7 +32,7 @@ export function Activities() {
 
     async function generateList() {
         for (let i = 0; i < 6; i++) {
-            let number = generateSingleValue()
+            let number: any = generateSingleValue('list');
             let value: any = geometricShapes.find(e => e.id === number);
             if (i > 0) {
                 listTemp.push(validateValue(number));
@@ -39,11 +40,22 @@ export function Activities() {
                 listTemp.push(value);
             }
         }
+        setQuestion(generateQuestion());
         setList(listTemp);
+
     }
 
-    function generateSingleValue() {
-        return String(Math.floor(Math.random() * geometricShapes.length + 1));
+    function generateQuestion() {
+        let number: any = generateSingleValue();
+        return listTemp.find(e => e === listTemp[number]);
+    }
+
+    function generateSingleValue(type?: string): any {
+        if (type == 'list') {
+            return String(Math.floor(Math.random() * geometricShapes.length + 1));
+        } else {
+            return Math.floor(Math.random() * listTemp.length - 1) + 1;
+        }
     }
 
     function validateValue(value: string): any {
@@ -55,7 +67,7 @@ export function Activities() {
         }
 
         if (have) {
-            return validateValue(generateSingleValue());
+            return validateValue(generateSingleValue('list'));
         } else {
             return geometricShapes.find(e => e.id === value);
         }
@@ -65,8 +77,8 @@ export function Activities() {
     // const startTimer = () => {
     //     setCustomInterval(
     //         setInterval(() => {
-	// 			setCountSeconds((value) => value + 1)
-	// 		}, 1000)
+    // 			setCountSeconds((value) => value + 1)
+    // 		}, 1000)
     //     )
     // }
 
@@ -86,12 +98,18 @@ export function Activities() {
 
     return (
         <Center>
-            <Box width='100%' height='100%'>
-                <Box>
-                    <Text fontFamily="regular" textAlign='center' fontSize='50'>Atividades</Text>
+            <Box bg={'backgroud'} width='100%' height='100%'>
+                {/* Header */}
+                <Box bg='primary.default' textAlign={'center'} p={3} >
+                    <Text fontFamily="regular" color={'lightText'} alignContent={'center'} textAlign='center' fontSize='20'>Atividades</Text>
                 </Box>
-                <Box alignItems="center">
-                    <Button onPress={() => navigation.goBack()}>Voltar</Button>
+
+                <Box p={2} m={1} alignItems={'center'}>
+                    {question &&
+                        <Box p={2} m={1} borderWidth={1} borderRadius={5} borderColor={'#000'} alignItems={'center'}>
+                            <question.svg width={150} height={150} fill="#000"></question.svg>
+                        </Box>
+                    }
                 </Box>
 
                 <Box alignItems={'center'} >
@@ -104,6 +122,10 @@ export function Activities() {
                             refreshing={true}
                         />
                     }
+                </Box>
+
+                <Box alignItems="center">
+                    <Button onPress={() => navigation.goBack()}>Voltar</Button>
                 </Box>
             </Box>
         </Center>
