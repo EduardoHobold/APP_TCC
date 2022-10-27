@@ -10,13 +10,14 @@ export const customTheme = extendTheme({
         },
         secondary: {
             default: '#009688',
-            light: '#52c7b8',
+            light: '#A8F4EA',
             dark: '#00675b'
         },
         title: '#363F5F',
         text: '#FFF',
         text_dark: '#000',
         backgroud: '#F0F2F5',
+        backgroud2: '#AFB6B5',
     },
     fonts: {
         regular: 'Poppins_400Regular',
