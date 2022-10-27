@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Text, Box, Button, Center, Progress, IconButton } from "native-base";
 import { FlatList, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-// import * as Speech from 'expo-speech';
+import * as Speech from 'expo-speech';
 
 // import { HomeNavigationProp } from '../../routes/types';
 import { SvgProps } from 'react-native-svg';
@@ -91,11 +91,9 @@ export function Activities() {
         }
     }
 
-    // function speak(text: string) {
-    //     Speech.speak(text, {
-    //         language: 'pt-BR'
-    //     });
-    // }
+    function speak(text: string) {
+        Speech.speak(text);
+    }
 
     const Item = ({ Item }: { Item: IGeometricShape }) => {
         return (
@@ -157,7 +155,7 @@ export function Activities() {
                             </Box>
 
                             <Box width={'100%'} flexDirection={'row'} justifyContent={'flex-end'}>
-                                <IconButton mr={5} variant="solid" borderRadius={30} onPress={() => console.log('teste')} _icon={{
+                                <IconButton mr={5} variant="solid" borderRadius={30} onPress={() => speak(question.name)} _icon={{
                                     as: AntDesign,
                                     name: "sound",
                                     color: '#fff',
