@@ -3,8 +3,6 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { AuthRoutes } from './auth.routes';
 import { AppRoutes } from './app.routes';
-// import { AppRoutes } from './app.routes';
-import { Home } from '../pages/Home';
 
 import { useAuth } from '../hooks/auth'
 

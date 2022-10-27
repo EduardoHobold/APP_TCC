@@ -8,6 +8,8 @@ import { HomeNavigationProp } from '../../routes/types';
 
 import { Feather } from '@expo/vector-icons';
 
+import GeometricIconButton from '../../assets/geometric-icon-button.svg';
+
 export function Home() {
     const { user, signOut } = useAuth();
     const navigation = useNavigation<HomeNavigationProp>();
@@ -19,7 +21,7 @@ export function Home() {
                 {/* Header */}
                 <Box bg='primary.default' flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'} p={3} >
                     <Box flexDirection={'row'} alignItems={'center'}>
-                        <Avatar alignSelf={'center'} size="lg"
+                        <Avatar alignSelf={'center'} size="md"
                             source={{ uri: user.photo }}
                         />
                         <Box flexDirection={'row'} ml={17}>
@@ -35,12 +37,42 @@ export function Home() {
                     }} />
                 </Box>
 
-                <Box alignItems={'center'}>
-                    <Button backgroundColor={'red.600'} w={200} h={200} mt={3} onPress={() => navigation.navigate('Atividades')}></Button>
-                    <Button backgroundColor={'blue.600'} w={200} h={200} mt={3} onPress={() => navigation.navigate('Atividades')}></Button>
-                    <Button backgroundColor={'green.600'} w={200} h={200} mt={3} onPress={() => navigation.navigate('Atividades')}></Button>
+                <Box alignItems={'center'} mt={3}>
+                    <Button backgroundColor={'white'} shadow={5} w={'80%'} h={200} mt={3} p={0} onPress={() => navigation.navigate('Atividades')}>
+                        <Box flexDirection={'row'} w={'100%'} h={'100%'} >
+                            <Box h={'100%'} w={'40%'} alignItems={'center'} justifyContent={'center'} bg={'green.700'}>
+                                <GeometricIconButton width={100} height={100} fill="#fff" />
+                                <Text textAlign={'center'} fontFamily={'bold'} color={'#fff'} fontSize={20}>Fácil</Text>
+                            </Box>
+                            <Box h={'100%'} w={'60%'} alignItems={'center'} justifyContent={'center'}>
+                                <Text textAlign={'center'} fontFamily={'bold'} color={'green.700'} fontSize={20}>Formas Geométricas</Text>
+                            </Box>
+                        </Box>
+                    </Button>
+                    <Button backgroundColor={'white'} shadow={5} w={'80%'} h={200} mt={3} p={0} onPress={() => navigation.navigate('Atividades')}>
+                        <Box flexDirection={'row'} w={'100%'} h={'100%'} >
+                            <Box h={'100%'} w={'40%'} alignItems={'center'} justifyContent={'center'} bg={'amber.400'}>
+                                <GeometricIconButton width={100} height={100} fill="#fff" />
+                                <Text textAlign={'center'} fontFamily={'bold'} color={'#fff'} fontSize={20}>Médio</Text>
+                            </Box>
+                            <Box h={'100%'} w={'60%'} alignItems={'center'} justifyContent={'center'}>
+                                <Text textAlign={'center'} fontFamily={'bold'} color={'amber.400'} fontSize={20}>Formas Geométricas Coloridas</Text>
+                            </Box>
+                        </Box>
+                    </Button>
+                    <Button backgroundColor={'white'} shadow={5} w={'80%'} h={200} mt={3} p={0} onPress={() => navigation.navigate('Atividades')}>
+                        <Box flexDirection={'row'} w={'100%'} h={'100%'} >
+                            <Box h={'100%'} w={'40%'} alignItems={'center'} justifyContent={'center'} bg={'red.700'}>
+                                <GeometricIconButton width={100} height={100} fill="#fff" />
+                                <Text textAlign={'center'} fontFamily={'bold'} color={'#fff'} fontSize={20}>Díficil</Text>
+                            </Box>
+                            <Box h={'100%'} w={'60%'} alignItems={'center'} justifyContent={'center'}>
+                                <Text textAlign={'center'} fontFamily={'bold'} color={'red.700'} fontSize={20}>Formas Geométricas e Palavras</Text>
+                            </Box>
+                        </Box>
+                    </Button>
                 </Box>
-                
+
             </Box>
         </Center>
     )

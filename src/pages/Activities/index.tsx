@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Text, Box, Button, Center, Progress, IconButton } from "native-base";
 import { FlatList, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+// import * as Speech from 'expo-speech';
 
 // import { HomeNavigationProp } from '../../routes/types';
 import { SvgProps } from 'react-native-svg';
@@ -90,6 +91,12 @@ export function Activities() {
         }
     }
 
+    // function speak(text: string) {
+    //     Speech.speak(text, {
+    //         language: 'pt-BR'
+    //     });
+    // }
+
     const Item = ({ Item }: { Item: IGeometricShape }) => {
         return (
             <Box p={2} m={1} borderWidth={1} borderRadius={5} borderColor={'primary.dark'}>
@@ -141,22 +148,24 @@ export function Activities() {
                         </Text>
                     </Box>
 
-                    <Box p={2} m={1} alignItems={'center'}>
-                        {question &&
-                            <Box p={2} m={1} borderWidth={1} borderRadius={5} borderColor={'primary.dark'} alignItems={'center'}>
-                                <question.svg width={150} height={150} fill="#fff"></question.svg>
+                    {question &&
+                        <Box>
+                            <Box p={2} m={1} alignItems={'center'}>
+                                <Box p={2} m={1} borderWidth={1} borderRadius={5} borderColor={'primary.dark'} alignItems={'center'}>
+                                    <question.svg width={150} height={150} fill="#fff"></question.svg>
+                                </Box>
                             </Box>
-                        }
-                    </Box>
 
-                    <Box width={'100%'} flexDirection={'row'} justifyContent={'flex-end'}>
-                        <IconButton mr={5} variant="solid" borderRadius={30} onPress={() => console.log('oi')} _icon={{
-                            as: AntDesign,
-                            name: "sound",
-                            color: '#fff',
-                            size: 8
-                        }} />
-                    </Box>
+                            <Box width={'100%'} flexDirection={'row'} justifyContent={'flex-end'}>
+                                <IconButton mr={5} variant="solid" borderRadius={30} onPress={() => console.log('teste')} _icon={{
+                                    as: AntDesign,
+                                    name: "sound",
+                                    color: '#fff',
+                                    size: 8
+                                }} />
+                            </Box>
+                        </Box>
+                    }
 
                     <Box alignItems={'center'} mt={5} >
                         {list.length > 0 &&
