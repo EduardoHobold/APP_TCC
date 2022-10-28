@@ -4,6 +4,8 @@ import { Container, Text, Box, Button, Center } from "native-base";
 
 import { useAuth } from '../../hooks/auth'
 
+import GeometricIconButton from '../../assets/geometric-icon-button.svg'
+
 export function SignIn() {
 
     const [isLoading, setIsLoading] = useState(false);
@@ -42,8 +44,11 @@ export function SignIn() {
                         end: [0, 1]
                     }
                 }}
-                w='100%' h='100%' justifyContent='center'
+                w='100%' h='100%' justifyContent='space-between'
             >
+                <Box alignItems={'center'} justifyContent={'center'} mt={50}>
+                    <GeometricIconButton width={200} height={200} fill="#fff" />
+                </Box>
                 <Text fontFamily="bold" textAlign='center' fontSize='36' color='text'>Teste primary color</Text>
                 <Box p='10'>
                     <Button shadow={2} onPress={handleSignInWithGoogle}>
@@ -52,17 +57,5 @@ export function SignIn() {
                 </Box>
             </Box>
         </Box>
-        // <Center>
-        //     <Box bg='primary.200' width='100%' height='100%'>
-        //         <Box>
-        //             <Text fontFamily="medium" textAlign='center' fontSize='20'>Teste Fonte Poppins</Text>
-        //         </Box>
-        //         <Box p='10'>
-        //             <Button shadow={2} onPress={handleSignInWithGoogle}>
-        //                 <Text fontFamily="medium" textAlign='center' fontSize='20' color='white'>Login</Text>
-        //             </Button>
-        //         </Box>
-        //     </Box>
-        // </Center>
     )
 }
