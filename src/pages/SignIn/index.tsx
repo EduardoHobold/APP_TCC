@@ -4,7 +4,9 @@ import { Container, Text, Box, Button, Center } from "native-base";
 
 import { useAuth } from '../../hooks/auth'
 
-import GeometricIconButton from '../../assets/geometric-icon-button.svg'
+import Logo from '../../assets/logo.svg'
+import Google from '../../assets/google.svg'
+import Apple from '../../assets/apple.svg'
 
 export function SignIn() {
 
@@ -44,16 +46,37 @@ export function SignIn() {
                         end: [0, 1]
                     }
                 }}
-                w='100%' h='100%' justifyContent='space-between'
+                w='100%' h='100%' justifyContent='center'
             >
-                <Box alignItems={'center'} justifyContent={'center'} mt={50}>
-                    <GeometricIconButton width={200} height={200} fill="#fff" />
+                <Box alignItems={'center'} justifyContent={'center'} mb={100}>
+                    <Logo width={200} height={200} fill="#A8F4EA" />
                 </Box>
-                <Text fontFamily="bold" textAlign='center' fontSize='36' color='text'>Teste primary color</Text>
-                <Box p='10'>
-                    <Button shadow={2} onPress={handleSignInWithGoogle}>
-                        <Text fontFamily="medium" textAlign='center' fontSize='20' color='white'>Login</Text>
-                    </Button>
+                <Box>
+                    <Text fontFamily="bold" textAlign='center' fontSize='28' color='text' mb={20}>
+                        Realize atividades {'\n'} localizando as formas {'\n'} geométricas
+                    </Text>
+                    <Box paddingX={10}>
+                        <Button shadow={3} onPress={handleSignInWithGoogle} bg={'white'} justifyContent={'flex-start'}>
+                            <Box flexDirection={'row'} alignItems={'center'}>
+                                <Box borderRightWidth={1} pr={2} >
+                                    <Google width={30} height={30} />
+                                </Box>
+                                <Text fontFamily="regular" textAlign='center' fontSize='18' color='text_dark' pl={5}>Entrar com Google</Text>
+                            </Box>
+                        </Button>
+                    </Box>
+                    {Platform.OS === 'ios' &&
+                        <Box paddingX={10} pt={3}>
+                            <Button shadow={3} onPress={handleSignInWithApple} bg={'white'} justifyContent={'flex-start'}>
+                                <Box flexDirection={'row'} alignItems={'center'}>
+                                    <Box borderRightWidth={1} pr={2} >
+                                        <Apple width={30} height={30} fill={'#fff'} />
+                                    </Box>
+                                    <Text fontFamily="regular" textAlign='center' fontSize='18' color='text_dark' pl={5}>Entrar com Apple</Text>
+                                </Box>
+                            </Button>
+                        </Box>
+                    }
                 </Box>
             </Box>
         </Box>

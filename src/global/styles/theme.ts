@@ -17,7 +17,6 @@ export const customTheme = extendTheme({
         text: '#FFF',
         text_dark: '#000',
         backgroud: '#F0F2F5',
-        backgroud2: '#AFB6B5',
     },
     fonts: {
         regular: 'Poppins_400Regular',
