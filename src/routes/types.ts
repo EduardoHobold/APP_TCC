@@ -6,7 +6,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 export type StackNavigatorParamList = {
   Inicio: undefined;
-  Atividades: undefined;
+  Atividades: { nivel: number };
 };
 
 export type BottomTabParamList = {

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Text, Box, Button, Center, Progress, IconButton } from "native-base";
 import { FlatList, Platform } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import * as Speech from 'expo-speech';
 
-// import { HomeNavigationProp } from '../../routes/types';
 import { SvgProps } from 'react-native-svg';
 import { Entypo, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -19,6 +18,9 @@ interface IGeometricShape {
 
 export function Activities() {
     const navigation = useNavigation();
+    const route = useRoute();
+    // const { nivel } = route.params;
+    const nivel = route.params.nivel;
     const [question, setQuestion] = useState<IGeometricShape>();
 
     // Controle de listas
@@ -45,7 +47,6 @@ export function Activities() {
         }
         setQuestion(generateQuestion());
         setList(listTemp);
-
     }
 
     function generateQuestion() {
@@ -76,6 +77,12 @@ export function Activities() {
         }
     }
 
+    function validateAnswer(item: IGeometricShape) {
+        console.log(item);
+        console.log(item.id === question.id ? 'Sucesso': 'Errado');
+        generateList();
+    }
+
     // Funções para controle do contador de tempo
     // const startTimer = () => {
     //     setCustomInterval(
@@ -97,9 +104,9 @@ export function Activities() {
 
     const Item = ({ Item }: { Item: IGeometricShape }) => {
         return (
-            <Box p={2} m={1} borderWidth={1} borderRadius={5} borderColor={'primary.dark'}>
+            <Button p={2} m={1} borderWidth={1} borderRadius={5} borderColor={'primary.dark'} onPress={() => validateAnswer(Item)}>
                 <Item.svg width={100} height={100} fill="#fff"></Item.svg>
-            </Box>
+            </Button>
         );
     };
 
@@ -150,7 +157,20 @@ export function Activities() {
                         <Box>
                             <Box p={2} m={1} alignItems={'center'}>
                                 <Box p={2} m={1} borderWidth={1} borderRadius={5} borderColor={'primary.dark'} alignItems={'center'}>
-                                    <question.svg width={150} height={150} fill="#fff"></question.svg>
+                                    {nivel !== 3
+                                        ?
+                                        <question.svg width={150} height={150} fill="#fff"></question.svg>
+                                        :
+                                        <Text
+                                            fontSize={36}
+                                            textAlign={'center'}
+                                            fontFamily={'medium'}
+                                            color={'lightText'}
+                                            textTransform={'uppercase'}
+                                            p={3}
+                                        >{question.name}
+                                        </Text>
+                                    }
                                 </Box>
                             </Box>
 
