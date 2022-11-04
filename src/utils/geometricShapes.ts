@@ -42,3 +42,16 @@ export const geometricShapes = [
     { id: '19', name: 'estrela', svg: Star2Svg, color: '#fff' },
     { id: '20', name: 'triangulo', svg: TriangleSvg, color: '#fff' },
 ]; 
+
+export const colorList = [
+    {id: '1',name: 'Branco', color: '#FFFFFF'},
+    {id: '2', name: 'Preto', color: '#000000'},
+    {id: '3', name: 'Azul', color: '#0000F0'},
+    {id: '4', name: 'Laranja', color: '#FFA500'},
+    {id: '5', name: 'Roxo', color: '#800080'},
+    {id: '6', name: 'Verde', color: '#228B20'},
+    {id: '7', name: 'Amarelo', color: '#FFFF00'},
+    {id: '8', name: 'Vermelho', color: '#FF0000'},
+    {id: '9', name: 'Rosa', color: '#FFC0C0'},
+    {id: '10', name: 'Marrom', color: '#A52A'},
+]

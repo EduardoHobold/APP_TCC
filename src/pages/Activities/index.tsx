@@ -7,7 +7,7 @@ import * as Speech from 'expo-speech';
 import { SvgProps } from 'react-native-svg';
 import { Entypo, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { geometricShapes } from '../../utils/geometricShapes';
+import { geometricShapes, colorList } from '../../utils/geometricShapes';
 
 interface IGeometricShape {
     id: string;
@@ -17,9 +17,9 @@ interface IGeometricShape {
 }
 
 export function Activities() {
-    const navigation = useNavigation();
-    const route = useRoute();
-    // const { nivel } = route.params;
+    const navigation: any = useNavigation();
+    const route: any = useRoute();
+
     const nivel = route.params.nivel;
     const [question, setQuestion] = useState<IGeometricShape>();
 
@@ -32,12 +32,13 @@ export function Activities() {
 
     useEffect(() => {
         navigation.getParent()?.setOptions({ tabBarStyle: { display: 'none' } })
-        generateList();
+        nivel !== 2 ? generateList() : generateListColors();
     }, []);
 
+    // Gera lista Nivel 1 e 3
     async function generateList() {
         for (let i = 0; i < 6; i++) {
-            let number: any = generateSingleValue('list');
+            let number: any = generateSingleValue(geometricShapes, 'list');
             let value: any = geometricShapes.find(e => e.id === number);
             if (i > 0) {
                 listTemp.push(validateValue(number));
@@ -45,23 +46,50 @@ export function Activities() {
                 listTemp.push(value);
             }
         }
-        setQuestion(generateQuestion());
+        setQuestion(generateQuestion() as IGeometricShape);
         setList(listTemp);
     }
 
+    // Gera lista Nivel 2
+    function generateListColors() {
+        let number: any = generateSingleValue(geometricShapes, 'list');
+        for (let i = 0; i < 6; i++) {
+            let value: any = {...geometricShapes.find(e => e.id === number)};
+            value.color = generateColor();
+
+            if (i > 0) {
+                listTemp.push(validateValueColors(value));
+            } else {
+                listTemp.push(value);
+            }
+        }
+        setQuestion(generateQuestion() as IGeometricShape);
+        setList(listTemp);
+    }
+
+    // Gera uma cor aleatória da lista de cores - colorList
+    function generateColor() {
+        let numberColor: any = generateSingleValue(colorList, 'list');
+        let valueColor: any = colorList.find(e => e.id === numberColor);
+        return valueColor.color;
+    }
+
+    // Gera a questão aleatória que irá aparecer a cima da tela
     function generateQuestion() {
-        let number: any = generateSingleValue();
+        let number: any = generateSingleValue(geometricShapes);
         return listTemp.find(e => e === listTemp[number]);
     }
 
-    function generateSingleValue(type?: string): any {
+    // Gera um objeto da lista passada como parametro
+    function generateSingleValue(list: any, type?: string): any {
         if (type == 'list') {
-            return String(Math.floor(Math.random() * geometricShapes.length + 1));
+            return String(Math.floor(Math.random() * list.length + 1));
         } else {
             return Math.floor(Math.random() * listTemp.length - 1) + 1;
         }
     }
 
+    // Valida registro das listas geradas nas atividade 1 e 3 para não duplicar os objetos
     function validateValue(value: string): any {
         let have = false;
         for (let i = 0; i <= listTemp.length - 1; i++) {
@@ -71,16 +99,35 @@ export function Activities() {
         }
 
         if (have) {
-            return validateValue(generateSingleValue('list'));
+            return validateValue(generateSingleValue(geometricShapes, 'list'));
         } else {
             return geometricShapes.find(e => e.id === value);
         }
     }
 
+    // Valida registro das listas geradas na atividade 2 para não duplicar a cor
+    function validateValueColors(value: IGeometricShape): any {
+        let have = false;
+
+        for (let i = 0; i <= listTemp.length - 1; i++) {
+            if (listTemp[i].color === value.color) {
+                have = true;
+            }
+        }
+
+        if (have) {
+            value.color = generateColor();
+            return validateValueColors(value);
+        } else {
+            return value;
+        }
+    }
+
+    // Valida Respostas quando o usuario clicar
     function validateAnswer(item: IGeometricShape) {
         console.log(item);
-        console.log(item.id === question.id ? 'Sucesso': 'Errado');
-        generateList();
+        // console.log(item.id === question.id ? 'Sucesso' : 'Errado');
+        nivel !== 2 ? generateList() : generateListColors();
     }
 
     // Funções para controle do contador de tempo
@@ -98,6 +145,7 @@ export function Activities() {
         }
     }
 
+    // Função que reproduz o som da figura
     function speak(text: string) {
         Speech.speak(text);
     }
@@ -105,7 +153,7 @@ export function Activities() {
     const Item = ({ Item }: { Item: IGeometricShape }) => {
         return (
             <Button p={2} m={1} borderWidth={1} borderRadius={5} borderColor={'primary.dark'} onPress={() => validateAnswer(Item)}>
-                <Item.svg width={100} height={100} fill="#fff"></Item.svg>
+                <Item.svg width={100} height={100} fill={nivel !== 2 ? '#FFF' : Item.color}></Item.svg>
             </Button>
         );
     };
@@ -159,7 +207,7 @@ export function Activities() {
                                 <Box p={2} m={1} borderWidth={1} borderRadius={5} borderColor={'primary.dark'} alignItems={'center'}>
                                     {nivel !== 3
                                         ?
-                                        <question.svg width={150} height={150} fill="#fff"></question.svg>
+                                        <question.svg width={150} height={150} fill={question.color}></question.svg>
                                         :
                                         <Text
                                             fontSize={36}
@@ -190,7 +238,7 @@ export function Activities() {
                             <FlatList
                                 data={list}
                                 renderItem={({ item }) => <Item Item={item} />}
-                                keyExtractor={(item) => item.id}
+                                keyExtractor={(item) => nivel !== 2 ? item.id : item.color}
                                 numColumns={3}
                                 refreshing={true}
                             />
