@@ -16,6 +16,12 @@ interface IGeometricShape {
     color: string;
 }
 
+interface IResult {
+    id: number;
+    answer: boolean;
+    time: number;
+}
+
 export function Activities() {
     const navigation: any = useNavigation();
     const route: any = useRoute();
@@ -28,11 +34,14 @@ export function Activities() {
     let listTemp: IGeometricShape[] = [];
 
     const [countSeconds, setCountSeconds] = useState(0);
-    const [customInterval, setCustomInterval] = useState();
+    const [customInterval, setCustomInterval] = useState<any>();
+
+    const [listResults, setListResults] = useState<IResult[]>([]);
 
     useEffect(() => {
         navigation.getParent()?.setOptions({ tabBarStyle: { display: 'none' } })
         nivel !== 2 ? generateList() : generateListColors();
+        startTimer();
     }, []);
 
     // Gera lista Nivel 1 e 3
@@ -54,7 +63,7 @@ export function Activities() {
     function generateListColors() {
         let number: any = generateSingleValue(geometricShapes, 'list');
         for (let i = 0; i < 6; i++) {
-            let value: any = {...geometricShapes.find(e => e.id === number)};
+            let value: any = { ...geometricShapes.find(e => e.id === number) };
             value.color = generateColor();
 
             if (i > 0) {
@@ -125,19 +134,28 @@ export function Activities() {
 
     // Valida Respostas quando o usuario clicar
     function validateAnswer(item: IGeometricShape) {
-        console.log(item);
-        // console.log(item.id === question.id ? 'Sucesso' : 'Errado');
+        let obj: IResult = {} as IResult;
+        obj.id = listResults.length;
+        obj.answer = nivel !== 2 ? (question?.id === item.id ? true : false) : (question?.color === item.color ? true : false);
+        stopTimer();
+        obj.time = countSeconds;
+
+        listResults.push(obj);
+
         nivel !== 2 ? generateList() : generateListColors();
+        startTimer();
+        console.log('obj', listResults);
     }
 
     // Funções para controle do contador de tempo
-    // const startTimer = () => {
-    //     setCustomInterval(
-    //         setInterval(() => {
-    // 			setCountSeconds((value) => value + 1)
-    // 		}, 1000)
-    //     )
-    // }
+    const startTimer = () => {
+        setCountSeconds(0);
+        setCustomInterval(
+            setInterval(() => {
+                setCountSeconds((value) => value + 1)
+            }, 1000)
+        )
+    }
 
     const stopTimer = () => {
         if (customInterval) {
@@ -198,6 +216,7 @@ export function Activities() {
                             color={'lightText'}
                         >
                             Encontre a forma geométrica correta
+                            {countSeconds}
                         </Text>
                     </Box>
 
