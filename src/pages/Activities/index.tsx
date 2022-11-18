@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Text, Box, Button, Center, Progress, IconButton } from "native-base";
-import { FlatList, Platform } from 'react-native';
+import { Alert, FlatList, Platform } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import * as Speech from 'expo-speech';
 
@@ -18,8 +18,9 @@ interface IGeometricShape {
 
 interface IResult {
     id: number;
-    answer: boolean;
     time: number;
+    correct: number;
+    wrong: number;
 }
 
 export function Activities() {
@@ -36,7 +37,8 @@ export function Activities() {
     const [countSeconds, setCountSeconds] = useState(0);
     const [customInterval, setCustomInterval] = useState<any>();
 
-    const [listResults, setListResults] = useState<IResult[]>([]);
+    const [progress, setProgress] = useState(0);
+    const [obj, setObj] = useState<IResult>({ id: 1, correct: 0, wrong: 0, time: 0 } as IResult);
 
     useEffect(() => {
         navigation.getParent()?.setOptions({ tabBarStyle: { display: 'none' } })
@@ -134,33 +136,49 @@ export function Activities() {
 
     // Valida Respostas quando o usuario clicar
     function validateAnswer(item: IGeometricShape) {
-        let obj: IResult = {} as IResult;
-        obj.id = listResults.length;
-        obj.answer = nivel !== 2 ? (question?.id === item.id ? true : false) : (question?.color === item.color ? true : false);
-        stopTimer();
-        obj.time = countSeconds;
+        //Valida se acertou ou errou e vai armazenando os dados
+        obj.correct = nivel !== 2 ? (question?.id === item.id ? obj.correct + 1 : obj.correct) : (question?.color === item.color ? obj.correct + 1 : obj.correct);
+        obj.wrong = nivel !== 2 ? (question?.id !== item.id ? obj.wrong + 1 : obj.wrong) : (question?.color !== item.color ? obj.wrong + 1 : obj.wrong);
 
-        listResults.push(obj);
+        // stopTimer();
+        obj.time = obj.time + countSeconds;
 
-        nivel !== 2 ? generateList() : generateListColors();
-        startTimer();
-        console.log('obj', listResults);
+        setProgress(progress + 10);
+
+        if ((obj.correct + obj.wrong) < 10) {
+            nivel !== 2 ? generateList() : generateListColors();
+            startTimer(true);
+        } else {
+            obj.time = obj.time / 10;
+            Alert.alert('Acabou!');
+        }
+        console.log('obj', obj);
     }
 
     // Funções para controle do contador de tempo
-    const startTimer = () => {
-        setCountSeconds(0);
-        setCustomInterval(
-            setInterval(() => {
-                setCountSeconds((value) => value + 1)
-            }, 1000)
-        )
-    }
+    // const startTimer = () => {
+    //     setCountSeconds(0);
+    //     setCustomInterval(
+    //         setInterval(() => {
+    //             setCountSeconds((value) => value + 1)
+    //         }, 1000)
+    //     )
+    // }
 
-    const stopTimer = () => {
-        if (customInterval) {
-            clearInterval(customInterval);
+    // const stopTimer = () => {
+    //     if (customInterval) {
+    //         clearInterval(customInterval);
+    //     }
+    // }
+
+    const startTimer = (resetar?: boolean) => {
+        if (resetar) {
+            setCountSeconds(0);
         }
+        setTimeout(() => {
+            setCountSeconds((value) => value + 1)
+            startTimer();
+        }, 1000);
     }
 
     // Função que reproduz o som da figura
@@ -200,9 +218,9 @@ export function Activities() {
                             color: 'text',
                             size: 8
                         }} />
-                    <Progress w={'70%'} size="xl" bg={'#fff'} colorScheme={'primary'} mb={4} value={55} mt={4} />
+                    <Progress w={'70%'} size="xl" bg={'#fff'} colorScheme={'primary'} mb={4} value={progress} mt={4} />
                     <Box flexDirection={'row'} mt={3}>
-                        <Text fontFamily={'bold'} color={'text'} fontSize={20} pr={2}>5</Text>
+                        <Text fontFamily={'bold'} color={'text'} fontSize={20} pr={2}>{obj.correct}</Text>
                         <MaterialCommunityIcons name="star" size={26} color="yellow" />
                     </Box>
                 </Box>
