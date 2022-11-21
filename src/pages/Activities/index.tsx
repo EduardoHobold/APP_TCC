@@ -21,6 +21,7 @@ interface IResult {
     time: number;
     correct: number;
     wrong: number;
+    nivel: number;
 }
 
 export function Activities() {
@@ -38,7 +39,7 @@ export function Activities() {
     const [customInterval, setCustomInterval] = useState<any>();
 
     const [progress, setProgress] = useState(0);
-    const [obj, setObj] = useState<IResult>({ id: 1, correct: 0, wrong: 0, time: 0 } as IResult);
+    const [obj, setObj] = useState<IResult>({ id: 1, correct: 0, wrong: 0, time: 0, nivel: nivel } as IResult);
 
     useEffect(() => {
         navigation.getParent()?.setOptions({ tabBarStyle: { display: 'none' } })
@@ -152,6 +153,7 @@ export function Activities() {
             obj.time = obj.time / 10;
             Alert.alert('Acabou!');
         }
+
         console.log('obj', obj);
     }
 

@@ -8,7 +8,7 @@ export function Profile() {
     // const { user, signOut } = useAuth();
     return (
         <Center>
-            <Box bg='primary.400' width='100%' height='100%'>
+            <Box bg='backgroud' width='100%' height='100%'>
                 <Box>
                     <Text fontFamily="regular" textAlign='center' fontSize='50'>Tela de Perfil</Text>
                 </Box>

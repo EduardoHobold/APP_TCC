@@ -19,7 +19,7 @@ export function Home() {
             <Box bg='backgroud' width='100%' height='100%'>
 
                 {/* Header */}
-                <Box bg='primary.default' flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'} p={3} >
+                <Box bg='primary.default' flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'} p={3} h={'80px'} >
                     <Box flexDirection={'row'} alignItems={'center'}>
                         <Avatar alignSelf={'center'} size="md"
                             source={{ uri: user.photo }}
@@ -38,7 +38,7 @@ export function Home() {
                 </Box>
 
                 <Box alignItems={'center'} mt={3}>
-                    <Button backgroundColor={'white'} shadow={5} w={'80%'} h={200} mt={3} p={0} onPress={() => navigation.navigate('Atividades', { nivel: 1})}>
+                    <Button bg={'backgroud2'} shadow={5} w={'80%'} h={200} mt={3} p={0} onPress={() => navigation.navigate('Atividades', { nivel: 1})}>
                         <Box flexDirection={'row'} w={'100%'} h={'100%'} >
                             <Box h={'100%'} w={'40%'} alignItems={'center'} justifyContent={'center'} bg={'green.700'}>
                                 <GeometricIconButton width={100} height={100} fill="#fff" />
@@ -49,7 +49,7 @@ export function Home() {
                             </Box>
                         </Box>
                     </Button>
-                    <Button backgroundColor={'white'} shadow={5} w={'80%'} h={200} mt={3} p={0} onPress={() => navigation.navigate('Atividades', { nivel: 2})}>
+                    <Button bg={'backgroud2'} shadow={5} w={'80%'} h={200} mt={3} p={0} onPress={() => navigation.navigate('Atividades', { nivel: 2})}>
                         <Box flexDirection={'row'} w={'100%'} h={'100%'} >
                             <Box h={'100%'} w={'40%'} alignItems={'center'} justifyContent={'center'} bg={'amber.400'}>
                                 <GeometricIconButton width={100} height={100} fill="#fff" />
@@ -60,7 +60,7 @@ export function Home() {
                             </Box>
                         </Box>
                     </Button>
-                    <Button backgroundColor={'white'} shadow={5} w={'80%'} h={200} mt={3} p={0} onPress={() => navigation.navigate('Atividades', { nivel: 3})}>
+                    <Button bg={'backgroud2'} shadow={5} w={'80%'} h={200} mt={3} p={0} onPress={() => navigation.navigate('Atividades', { nivel: 3})}>
                         <Box flexDirection={'row'} w={'100%'} h={'100%'} >
                             <Box h={'100%'} w={'40%'} alignItems={'center'} justifyContent={'center'} bg={'red.700'}>
                                 <GeometricIconButton width={100} height={100} fill="#fff" />
