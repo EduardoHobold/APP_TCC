@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Container, Text, Box, Button, Center, Progress, IconButton } from "native-base";
 import { Alert, FlatList, Platform } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+
 import * as Speech from 'expo-speech';
+import uuid from 'react-native-uuid';
+
+import { getRealm } from '../../databases/realm';
 
 import { SvgProps } from 'react-native-svg';
 import { Entypo, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -17,18 +21,20 @@ interface IGeometricShape {
 }
 
 interface IResult {
-    id: number;
+    _id: string;
+    idUser: string;
     time: number;
     correct: number;
     wrong: number;
     nivel: number;
+    date: Date;
 }
 
 export function Activities() {
-    const navigation: any = useNavigation();
+    const navigation = useNavigation();
     const route: any = useRoute();
 
-    const nivel = route.params.nivel;
+    const { nivel, user } = route.params;
     const [question, setQuestion] = useState<IGeometricShape>();
 
     // Controle de listas
@@ -39,13 +45,18 @@ export function Activities() {
     const [customInterval, setCustomInterval] = useState<any>();
 
     const [progress, setProgress] = useState(0);
-    const [obj, setObj] = useState<IResult>({ id: 1, correct: 0, wrong: 0, time: 0, nivel: nivel } as IResult);
+    const [obj, setObj] = useState<IResult>({ _id: uuid.v4(), idUser: user, correct: 0, wrong: 0, time: 0, nivel: nivel } as IResult);
 
     useEffect(() => {
         navigation.getParent()?.setOptions({ tabBarStyle: { display: 'none' } })
         nivel !== 2 ? generateList() : generateListColors();
         startTimer();
     }, []);
+
+    function handleBack() {
+        navigation.goBack();
+        navigation.getParent()?.setOptions({ tabBarStyle: { display: 'flex', height: 70, paddingHorizontal: 5, paddingVertical: Platform.OS === 'ios' ? 20 : 0 } });
+    }
 
     // Gera lista Nivel 1 e 3
     async function generateList() {
@@ -135,53 +146,76 @@ export function Activities() {
         }
     }
 
+    async function saveNewAtivity() {
+        console.log('obj', obj);
+        // const realm = await getRealm();
+
+        // try {
+        //     realm.write(() => {
+        //         const created = realm.create('Activities', obj);
+
+        //         console.log('criado', created);
+        //     });
+
+        //     Alert.alert('Acabou, atividades concluidas!');
+        // } catch {
+        //     Alert.alert('Não foi possível concluir a atividade');            
+        // } finally {
+        //     realm.close();
+        //     handleBack();
+        // }
+
+    }
+
     // Valida Respostas quando o usuario clicar
     function validateAnswer(item: IGeometricShape) {
         //Valida se acertou ou errou e vai armazenando os dados
         obj.correct = nivel !== 2 ? (question?.id === item.id ? obj.correct + 1 : obj.correct) : (question?.color === item.color ? obj.correct + 1 : obj.correct);
         obj.wrong = nivel !== 2 ? (question?.id !== item.id ? obj.wrong + 1 : obj.wrong) : (question?.color !== item.color ? obj.wrong + 1 : obj.wrong);
 
-        // stopTimer();
+        stopTimer();
         obj.time = obj.time + countSeconds;
 
         setProgress(progress + 10);
 
         if ((obj.correct + obj.wrong) < 10) {
             nivel !== 2 ? generateList() : generateListColors();
-            startTimer(true);
+            startTimer();
         } else {
             obj.time = obj.time / 10;
-            Alert.alert('Acabou!');
+            obj.date = new Date();
+            saveNewAtivity();
+            // Alert.alert('Acabou!');
         }
 
         console.log('obj', obj);
     }
 
     // Funções para controle do contador de tempo
-    // const startTimer = () => {
-    //     setCountSeconds(0);
-    //     setCustomInterval(
-    //         setInterval(() => {
-    //             setCountSeconds((value) => value + 1)
-    //         }, 1000)
-    //     )
-    // }
-
-    // const stopTimer = () => {
-    //     if (customInterval) {
-    //         clearInterval(customInterval);
-    //     }
-    // }
-
-    const startTimer = (resetar?: boolean) => {
-        if (resetar) {
-            setCountSeconds(0);
-        }
-        setTimeout(() => {
-            setCountSeconds((value) => value + 1)
-            startTimer();
-        }, 1000);
+    const startTimer = () => {
+        setCountSeconds(0);
+        setCustomInterval(
+            setInterval(() => {
+                setCountSeconds((value) => value + 1)
+            }, 1000)
+        )
     }
+
+    const stopTimer = () => {
+        if (customInterval) {
+            clearInterval(customInterval);
+        }
+    }
+
+    // const startTimer = (resetar?: boolean) => {
+    //     if (resetar) {
+    //         setCountSeconds(0);
+    //     }
+    //     setTimeout(() => {
+    //         setCountSeconds((value) => value + 1)
+    //         startTimer();
+    //     }, 1000);
+    // }
 
     // Função que reproduz o som da figura
     function speak(text: string) {
@@ -210,10 +244,7 @@ export function Activities() {
                 <Box flexDirection={'row'} justifyContent={'space-around'}>
                     <IconButton p={1}
                         variant="ghost"
-                        onPress={() => {
-                            navigation.goBack();
-                            navigation.getParent()?.setOptions({ tabBarStyle: { display: 'flex', height: 70, paddingHorizontal: 5, paddingVertical: Platform.OS === 'ios' ? 20 : 0 } })
-                        }}
+                        onPress={handleBack}
                         _icon={{
                             as: Entypo,
                             name: "chevron-left",
