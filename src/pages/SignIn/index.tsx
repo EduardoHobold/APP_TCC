@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-import { Alert, ActivityIndicator, Platform } from 'react-native';
-import { Container, Text, Box, Button, Center } from "native-base";
+import { Alert, Platform, StatusBar } from 'react-native';
+import { Box, Text, Button } from "native-base";
 
 import { useAuth } from '../../hooks/auth'
 
@@ -38,6 +38,7 @@ export function SignIn() {
 
     return (
         <Box w='100%' h='100%'>
+            <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
             <Box
                 bg={{
                     linearGradient: {

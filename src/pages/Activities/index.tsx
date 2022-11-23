@@ -147,23 +147,20 @@ export function Activities() {
     }
 
     async function saveNewAtivity() {
-        console.log('obj', obj);
-        // const realm = await getRealm();
+        const realm = await getRealm();
 
-        // try {
-        //     realm.write(() => {
-        //         const created = realm.create('Activities', obj);
+        try {
+            realm.write(() => {
+                realm.create('Activities', obj);
+            });
 
-        //         console.log('criado', created);
-        //     });
-
-        //     Alert.alert('Acabou, atividades concluidas!');
-        // } catch {
-        //     Alert.alert('Não foi possível concluir a atividade');            
-        // } finally {
-        //     realm.close();
-        //     handleBack();
-        // }
+            Alert.alert('Acabou, atividades concluidas!');
+        } catch {
+            Alert.alert('Não foi possível concluir a atividade');            
+        } finally {
+            realm.close();
+            handleBack();
+        }
 
     }
 
@@ -241,7 +238,7 @@ export function Activities() {
             }} width='100%' height='100%' >
 
                 {/* Header Progress */}
-                <Box flexDirection={'row'} justifyContent={'space-around'}>
+                <Box flexDirection={'row'} justifyContent={'space-around'} pt={10} >
                     <IconButton p={1}
                         variant="ghost"
                         onPress={handleBack}

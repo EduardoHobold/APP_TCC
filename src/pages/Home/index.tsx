@@ -1,4 +1,5 @@
 import React from 'react';
+import { StatusBar } from 'react-native';
 import { Button, Text, Box, IconButton, Center, Avatar } from "native-base";
 import { useNavigation } from '@react-navigation/native';
 
@@ -16,10 +17,11 @@ export function Home() {
 
     return (
         <Center>
+            <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
             <Box bg='backgroud' width='100%' height='100%'>
 
                 {/* Header */}
-                <Box bg='primary.default' flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'} p={3} h={'80px'} >
+                <Box bg='primary.default' flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'} p={3} pt={10} h={'110px'} >
                     <Box flexDirection={'row'} alignItems={'center'}>
                         <Avatar alignSelf={'center'} size="md"
                             source={{ uri: user.photo }}

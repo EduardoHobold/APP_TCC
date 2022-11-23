@@ -4,10 +4,10 @@ export const ActivitiesSchema = {
     properties: {
         _id: "string",
         idUser: "string",
-        time: "number",
-        correct: "number",
-        wrong: "number",
-        nivel: "number",
+        time: "int",
+        correct: "int",
+        wrong: "int",
+        nivel: "int",
         date: "date",
     },
     
