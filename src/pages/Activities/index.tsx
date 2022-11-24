@@ -147,20 +147,20 @@ export function Activities() {
     }
 
     async function saveNewAtivity() {
-        const realm = await getRealm();
+        // const realm = await getRealm();
 
-        try {
-            realm.write(() => {
-                realm.create('Activities', obj);
-            });
+        // try {
+        //     realm.write(() => {
+        //         realm.create('Activities', obj);
+        //     });
 
-            Alert.alert('Acabou, atividades concluidas!');
-        } catch {
-            Alert.alert('Não foi possível concluir a atividade');            
-        } finally {
-            realm.close();
-            handleBack();
-        }
+        //     Alert.alert('Acabou, atividades concluidas!');
+        // } catch {
+        //     Alert.alert('Não foi possível concluir a atividade');            
+        // } finally {
+        //     realm.close();
+        //     handleBack();
+        // }
 
     }
 

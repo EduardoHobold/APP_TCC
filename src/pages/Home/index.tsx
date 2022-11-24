@@ -1,15 +1,14 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
-import { Button, Text, Box, IconButton, Center, Avatar } from "native-base";
+import { Box, Text, IconButton, Center, Avatar, ScrollView } from "native-base";
 import { useNavigation } from '@react-navigation/native';
 
 import { useAuth } from '../../hooks/auth';
-
 import { HomeNavigationProp } from '../../routes/types';
 
 import { Feather } from '@expo/vector-icons';
 
-import GeometricIconButton from '../../assets/geometric-icon-button.svg';
+import { CardActivities } from '../../components/CardActivities';
 
 export function Home() {
     const { user, signOut } = useAuth();
@@ -21,7 +20,8 @@ export function Home() {
             <Box bg='backgroud' width='100%' height='100%'>
 
                 {/* Header */}
-                <Box bg='primary.default' flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'} p={3} pt={10} h={'110px'} >
+                <Box bg='primary.default' flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'} p={3}
+                    pt={StatusBar.currentHeight} h={`${70 + StatusBar.currentHeight!}px`} >
                     <Box flexDirection={'row'} alignItems={'center'}>
                         <Avatar alignSelf={'center'} size="md"
                             source={{ uri: user.photo }}
@@ -39,41 +39,28 @@ export function Home() {
                     }} />
                 </Box>
 
-                <Box alignItems={'center'} mt={3}>
-                    <Button bg={'backgroud2'} shadow={5} w={'80%'} h={200} mt={3} p={0} onPress={() => navigation.navigate('Atividades', { nivel: 1, user: user.id})}>
-                        <Box flexDirection={'row'} w={'100%'} h={'100%'} >
-                            <Box h={'100%'} w={'40%'} alignItems={'center'} justifyContent={'center'} bg={'green.700'}>
-                                <GeometricIconButton width={100} height={100} fill="#fff" />
-                                <Text textAlign={'center'} fontFamily={'bold'} color={'#fff'} fontSize={20}>Fácil</Text>
-                            </Box>
-                            <Box h={'100%'} w={'60%'} alignItems={'center'} justifyContent={'center'}>
-                                <Text textAlign={'center'} fontFamily={'bold'} color={'green.700'} fontSize={20}>Formas Geométricas</Text>
-                            </Box>
-                        </Box>
-                    </Button>
-                    <Button bg={'backgroud2'} shadow={5} w={'80%'} h={200} mt={3} p={0} onPress={() => navigation.navigate('Atividades', { nivel: 2, user: user.id})}>
-                        <Box flexDirection={'row'} w={'100%'} h={'100%'} >
-                            <Box h={'100%'} w={'40%'} alignItems={'center'} justifyContent={'center'} bg={'amber.400'}>
-                                <GeometricIconButton width={100} height={100} fill="#fff" />
-                                <Text textAlign={'center'} fontFamily={'bold'} color={'#fff'} fontSize={20}>Médio</Text>
-                            </Box>
-                            <Box h={'100%'} w={'60%'} alignItems={'center'} justifyContent={'center'}>
-                                <Text textAlign={'center'} fontFamily={'bold'} color={'amber.400'} fontSize={20}>Formas Geométricas Coloridas</Text>
-                            </Box>
-                        </Box>
-                    </Button>
-                    <Button bg={'backgroud2'} shadow={5} w={'80%'} h={200} mt={3} p={0} onPress={() => navigation.navigate('Atividades', { nivel: 3, user: user.id})}>
-                        <Box flexDirection={'row'} w={'100%'} h={'100%'} >
-                            <Box h={'100%'} w={'40%'} alignItems={'center'} justifyContent={'center'} bg={'red.700'}>
-                                <GeometricIconButton width={100} height={100} fill="#fff" />
-                                <Text textAlign={'center'} fontFamily={'bold'} color={'#fff'} fontSize={20}>Díficil</Text>
-                            </Box>
-                            <Box h={'100%'} w={'60%'} alignItems={'center'} justifyContent={'center'}>
-                                <Text textAlign={'center'} fontFamily={'bold'} color={'red.700'} fontSize={20}>Formas Geométricas e Palavras</Text>
-                            </Box>
-                        </Box>
-                    </Button>
-                </Box>
+                <ScrollView showsVerticalScrollIndicator={false} >
+                    <Box alignItems={'center'} marginY={3}>
+                        <CardActivities
+                            color='green.700'
+                            onPress={() => navigation.navigate('Atividades', { nivel: 1, user: user.id })}
+                            dificultyText='Fácil'
+                            description='Formas Geométricas'
+                        />
+                        <CardActivities
+                            color='amber.400'
+                            onPress={() => navigation.navigate('Atividades', { nivel: 2, user: user.id })}
+                            dificultyText='Médio'
+                            description='Formas Geométricas Coloridas'
+                        />
+                        <CardActivities
+                            color='red.700'
+                            onPress={() => navigation.navigate('Atividades', { nivel: 3, user: user.id })}
+                            dificultyText='Díficil'
+                            description='Formas Geométricas e Palavras'
+                        />
+                    </Box>
+                </ScrollView>
 
             </Box>
         </Center>
