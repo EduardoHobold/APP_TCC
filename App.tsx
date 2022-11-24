@@ -1,8 +1,9 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
 import { NativeBaseProvider } from 'native-base';
-import AppLoading from 'expo-app-loading';
 import { Routes } from './src/routes';
+
+import { LoadAnimation } from './src/components/LoadAnimation';
 
 import {
   useFonts,
@@ -24,7 +25,11 @@ export default function App() {
   const { userSotarageLoading } = useAuth();
 
   if (!fontsLoaded || userSotarageLoading) {
-    return <AppLoading />
+    return (
+      <NativeBaseProvider theme={customTheme} config={customTheme.config}>
+        <LoadAnimation />
+      </NativeBaseProvider>
+    )
   } else {
     return (
       <NativeBaseProvider theme={customTheme} config={customTheme.config}>
