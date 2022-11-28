@@ -1,18 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StatusBar } from 'react-native';
-import { Box, Text, IconButton, Center, Avatar, ScrollView } from "native-base";
+import { Box, Text, IconButton, Center, Avatar, ScrollView, AlertDialog, Button } from "native-base";
 import { useNavigation } from '@react-navigation/native';
 
 import { useAuth } from '../../hooks/auth';
 import { HomeNavigationProp } from '../../routes/types';
 
-import { Feather } from '@expo/vector-icons';
+import { Feather, AntDesign } from '@expo/vector-icons';
 
 import { CardActivities } from '../../components/CardActivities';
 
 export function Home() {
     const { user, signOut } = useAuth();
     const navigation = useNavigation<HomeNavigationProp>();
+
+    const [nivel, setNivel] = useState<number>(0);
+    const [isOpen, setIsOpen] = useState(false);
+    const cancelRef = React.useRef(null);
+    const onClose = () => setIsOpen(false);
+
+    function handleNavigationActivities() {
+        navigation.navigate('Atividades', { nivel: nivel, user: user.id });
+        onClose();
+    }
 
     return (
         <Center>
@@ -43,19 +53,19 @@ export function Home() {
                     <Box alignItems={'center'} marginY={3}>
                         <CardActivities
                             color='green.700'
-                            onPress={() => navigation.navigate('Atividades', { nivel: 1, user: user.id })}
+                            onPress={() => { setIsOpen(!isOpen), setNivel(1) }}
                             dificultyText='Fácil'
                             description='Formas Geométricas'
                         />
                         <CardActivities
                             color='amber.400'
-                            onPress={() => navigation.navigate('Atividades', { nivel: 2, user: user.id })}
+                            onPress={() => { setIsOpen(!isOpen), setNivel(2) }}
                             dificultyText='Médio'
                             description='Formas Geométricas Coloridas'
                         />
                         <CardActivities
                             color='red.700'
-                            onPress={() => navigation.navigate('Atividades', { nivel: 3, user: user.id })}
+                            onPress={() => { setIsOpen(!isOpen), setNivel(3) }}
                             dificultyText='Díficil'
                             description='Formas Geométricas e Palavras'
                         />
@@ -63,6 +73,30 @@ export function Home() {
                 </ScrollView>
 
             </Box>
+
+            <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose} >
+                <AlertDialog.Content>
+                    <AlertDialog.Header bg={'primary.default'} flexDirection={'row'} justifyContent={'space-between'}>
+                        <Text fontFamily="bold" color={'text'} fontSize={16}>Deseja iniciar a Atividade?</Text>
+                        <IconButton variant="ghost" onPress={onClose} padding={0} _icon={{
+                            as: AntDesign,
+                            name: "close",
+                            color: '#fff',
+                            size: 5
+                        }} />
+                    </AlertDialog.Header>
+                    <AlertDialog.Footer bg={'background'}>
+                        <Button.Group space={2}>
+                            <Button variant="unstyled" onPress={onClose} ref={cancelRef}>
+                                <Text fontFamily="bold" color={'text_dark'} justifyContent={'center'} textAlign='center'>Cancelar</Text>
+                            </Button>
+                            <Button onPress={handleNavigationActivities} ref={cancelRef} bg={'secondary.default'}>
+                                <Text fontFamily="bold" color={'text'} justifyContent={'center'} textAlign='center'>Iniciar</Text>
+                            </Button>
+                        </Button.Group>
+                    </AlertDialog.Footer>
+                </AlertDialog.Content>
+            </AlertDialog>
         </Center>
     )
 }

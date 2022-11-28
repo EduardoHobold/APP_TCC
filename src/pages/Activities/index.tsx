@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Text, Box, Button, Center, Progress, IconButton } from "native-base";
+import { Container, Text, Box, Button, Center, Progress, IconButton, AlertDialog } from "native-base";
 import { Alert, FlatList, Platform } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
@@ -46,6 +46,10 @@ export function Activities() {
 
     const [progress, setProgress] = useState(0);
     const [obj, setObj] = useState<IResult>({ _id: uuid.v4(), idUser: user, correct: 0, wrong: 0, time: 0, nivel: nivel } as IResult);
+
+    const [isOpen, setIsOpen] = useState(false);
+    const cancelRef = React.useRef(null);
+    const onClose = () => setIsOpen(false);
 
     useEffect(() => {
         navigation.getParent()?.setOptions({ tabBarStyle: { display: 'none' } })
@@ -131,7 +135,6 @@ export function Activities() {
     // Valida registro das listas geradas na atividade 2 para não duplicar a cor
     function validateValueColors(value: IGeometricShape): any {
         let have = false;
-
         for (let i = 0; i <= listTemp.length - 1; i++) {
             if (listTemp[i].color === value.color) {
                 have = true;
@@ -182,7 +185,7 @@ export function Activities() {
             obj.time = obj.time / 10;
             obj.date = new Date();
             saveNewAtivity();
-            // Alert.alert('Acabou!');
+            setIsOpen(!isOpen);
         }
 
         console.log('obj', obj);
@@ -203,16 +206,6 @@ export function Activities() {
             clearInterval(customInterval);
         }
     }
-
-    // const startTimer = (resetar?: boolean) => {
-    //     if (resetar) {
-    //         setCountSeconds(0);
-    //     }
-    //     setTimeout(() => {
-    //         setCountSeconds((value) => value + 1)
-    //         startTimer();
-    //     }, 1000);
-    // }
 
     // Função que reproduz o som da figura
     function speak(text: string) {
@@ -314,6 +307,19 @@ export function Activities() {
                 </Box>
 
             </Box>
+
+            {/* Alert que irá aparecer ao concluir as 10 atividades */}
+            <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose}>
+                <AlertDialog.Content bg={'primary.default'} p={5}>
+                    <Box mb={5}>
+                        <Text fontFamily="bold" color={'text'} fontSize={16} textAlign={'center'} >Parabéns, você concluiu as atividades!</Text>
+                    </Box>
+                    <Button onPress={handleBack} ref={cancelRef} bg={'secondary.default'}>
+                        <Text fontFamily="bold" color={'text'} justifyContent={'center'} textAlign='center'>Voltar</Text>
+                    </Button>
+                </AlertDialog.Content>
+            </AlertDialog>
+
         </Center>
     )
 
