@@ -7,8 +7,13 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "ios": {
+      "bundleIdentifier": "com.eduardohobold.apptcc",
+      "buildNumber": "1.0.0"
+    },
     "android": {
-      "package": "com.eduardohobold.apptcc"
+      "package": "com.eduardohobold.apptcc",
+      "versionCode": 1
     }
   }
 }

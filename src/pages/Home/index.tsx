@@ -31,7 +31,7 @@ export function Home() {
 
                 {/* Header */}
                 <Box bg='primary.default' flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'} p={3}
-                    pt={StatusBar.currentHeight} h={`${70 + StatusBar.currentHeight!}px`} >
+                    pt={10} h={`${70 + StatusBar.currentHeight!}px`} >
                     <Box flexDirection={'row'} alignItems={'center'}>
                         <Avatar alignSelf={'center'} size="md"
                             source={{ uri: user.photo }}

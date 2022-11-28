@@ -1,31 +1,50 @@
-import React, { useEffect } from 'react';
-import { StatusBar, Alert } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { StatusBar, FlatList, Alert } from 'react-native';
 import { Text, Box, Center } from "native-base";
+import { useFocusEffect } from '@react-navigation/native';
+
+import moment from 'moment';
 
 import { CardResults } from '../../components/CardResults';
 
 import { useAuth } from '../../hooks/auth';
 import { getRealm } from '../../databases/realm';
+import { LoadAnimation } from '../../components/LoadAnimation';
+
+interface IResult {
+    _id: string;
+    idUser: string;
+    time: number;
+    correct: number;
+    wrong: number;
+    nivel: number;
+    date: Date;
+}
 
 export function Results() {
     const { user, signOut } = useAuth();
+    const [isLoading, setIsLoading] = useState(false);
+    const [listResult, setListResult] = useState<IResult[]>([]);
 
     async function searchActivities() {
-        // const realm = await getRealm();
+        setIsLoading(true);
+        const realm = await getRealm();
 
-        // try {
-        //     const response = realm.objects("Activities");
-        //     console.log('dados', response);
-        // } catch {
-        //     Alert.alert("Não foi possível buscar os dados!")
-        // } finally {
-        //     realm.close();
-        // }
+        try {
+            const response = realm.objects<IResult[]>("Activities").filtered(`idUser = '${user.id}'`).sorted("date", true).toJSON();
+            setListResult(response)
+            console.log('dados', listResult);
+        } catch {
+            Alert.alert("Não foi possível buscar os dados!")
+        } finally {
+            realm.close();
+            setIsLoading(false);
+        }
     }
 
-    useEffect(() => {
+    useFocusEffect(useCallback(() => {
         searchActivities();
-    }, [])
+    }, []));
 
     return (
         <Center>
@@ -38,22 +57,26 @@ export function Results() {
                 </Box>
 
                 {/* Body */}
-                <Box>
-                    <CardResults
-                        nivel={1}
-                        date='22/11/2022'
-                        time={15.4}
-                        correct={7}
-                        wrong={3}
-                    />
-                    <CardResults
-                        nivel={2}
-                        date='24/11/2022'
-                        time={8.7}
-                        correct={4}
-                        wrong={6}
-                    />
-                </Box>
+                {
+                    isLoading
+                        ? <LoadAnimation />
+                        : <FlatList
+                            data={listResult}
+                            keyExtractor={item => item._id}
+                            renderItem={({ item }) => (
+                                <CardResults
+                                    nivel={item.nivel}
+                                    date={String(moment(item.date).format('DD/MM/YYYY HH:mm'))}
+                                    time={item.time}
+                                    correct={item.correct}
+                                    wrong={item.wrong}
+                                />
+                            )}
+                            showsVerticalScrollIndicator={false}
+                        />
+                }
+
+
             </Box>
         </Center>
     )

@@ -150,21 +150,20 @@ export function Activities() {
     }
 
     async function saveNewAtivity() {
-        // const realm = await getRealm();
+        const realm = await getRealm();
 
-        // try {
-        //     realm.write(() => {
-        //         realm.create('Activities', obj);
-        //     });
+        try {
+            realm.write(() => {
+                realm.create('Activities', obj);
+            });
 
-        //     Alert.alert('Acabou, atividades concluidas!');
-        // } catch {
-        //     Alert.alert('Não foi possível concluir a atividade');            
-        // } finally {
-        //     realm.close();
-        //     handleBack();
-        // }
-
+            setIsOpen(!isOpen);
+        } catch {
+            Alert.alert('Não foi possível concluir a atividade');            
+        } finally {
+            realm.close();
+            handleBack();
+        }
     }
 
     // Valida Respostas quando o usuario clicar
@@ -185,7 +184,6 @@ export function Activities() {
             obj.time = obj.time / 10;
             obj.date = new Date();
             saveNewAtivity();
-            setIsOpen(!isOpen);
         }
 
         console.log('obj', obj);

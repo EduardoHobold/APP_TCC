@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Text } from 'native-base';
 
-import { AntDesign, MaterialIcons, Entypo } from '@expo/vector-icons';
+import { AntDesign, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 interface Props {
     nivel: number;
@@ -28,7 +28,7 @@ export function CardResults({ nivel, date, time, correct, wrong }: Props) {
             <Box w={'95%'} h={'100%'} bg={'backgroud2'} borderTopRightRadius={5} borderBottomRightRadius={5} p={3}>
                 <Box justifyContent={'space-between'} flexDirection='row' paddingY={2} paddingX={3}>
                     <Box flexDirection={'row'} alignItems="center">
-                        <Entypo name='calendar' size={22} />
+                        <MaterialCommunityIcons name='calendar-clock' size={24} />
                         <Text fontFamily="bold" color={'title'} fontSize='18' > {date}</Text>
                     </Box>
                     <Box flexDirection={'row'} alignItems="center">
