@@ -159,7 +159,7 @@ export function Activities() {
 
             setIsOpen(!isOpen);
         } catch {
-            Alert.alert('Não foi possível concluir a atividade');            
+            Alert.alert('Não foi possível concluir a atividade');
         } finally {
             realm.close();
             handleBack();
@@ -207,7 +207,15 @@ export function Activities() {
 
     // Função que reproduz o som da figura
     function speak(text: string) {
-        Speech.speak(text);
+        if (nivel === 2) {
+            colorList.map(color => {
+                if (question?.color === color.color) {
+                    Speech.speak(text + ' ' + color.name);
+                }
+            })
+        } else {
+            Speech.speak(text);
+        }
     }
 
     const Item = ({ Item }: { Item: IGeometricShape }) => {

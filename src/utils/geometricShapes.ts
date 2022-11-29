@@ -44,7 +44,7 @@ export const geometricShapes = [
 ]; 
 
 export const colorList = [
-    {id: '1',name: 'Branco', color: '#FFFFFF'},
+    {id: '1', name: 'Branco', color: '#FFFFFF'},
     {id: '2', name: 'Preto', color: '#000000'},
     {id: '3', name: 'Azul', color: '#0000F0'},
     {id: '4', name: 'Laranja', color: '#FFA500'},
