@@ -8,7 +8,7 @@ import moment from 'moment';
 import { CardResults } from '../../components/CardResults';
 
 import { useAuth } from '../../hooks/auth';
-import { getRealm } from '../../databases/realm';
+import getRealm from '../../databases/realm';
 import { LoadAnimation } from '../../components/LoadAnimation';
 
 interface IResult {

@@ -6,7 +6,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import * as Speech from 'expo-speech';
 import uuid from 'react-native-uuid';
 
-import { getRealm } from '../../databases/realm';
+import getRealm from '../../databases/realm';
 
 import { SvgProps } from 'react-native-svg';
 import { Entypo, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -151,18 +151,21 @@ export function Activities() {
 
     async function saveNewAtivity() {
         const realm = await getRealm();
-
-        try {
-            realm.write(() => {
-                realm.create('Activities', obj);
-            });
-
-            setIsOpen(!isOpen);
-        } catch {
-            Alert.alert('Não foi possível concluir a atividade');
-        } finally {
-            realm.close();
-            handleBack();
+        console.log('save');
+        if (realm) {
+            console.log('entrou');
+            try {
+                console.log('entrou try');
+                realm.write(() => {
+                    realm.create('Activities', obj);
+                });
+    
+            } catch {
+                Alert.alert('Não foi possível concluir a atividade');
+            } finally {
+                realm.close();
+                setIsOpen(!isOpen);
+            }
         }
     }
 
