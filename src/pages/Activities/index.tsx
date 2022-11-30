@@ -151,15 +151,11 @@ export function Activities() {
 
     async function saveNewAtivity() {
         const realm = await getRealm();
-        console.log('save');
         if (realm) {
-            console.log('entrou');
             try {
-                console.log('entrou try');
                 realm.write(() => {
                     realm.create('Activities', obj);
                 });
-    
             } catch {
                 Alert.alert('Não foi possível concluir a atividade');
             } finally {
@@ -266,7 +262,6 @@ export function Activities() {
                             color={'lightText'}
                         >
                             Encontre a forma geométrica correta
-                            {countSeconds}
                         </Text>
                     </Box>
 

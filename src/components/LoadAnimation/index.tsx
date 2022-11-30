@@ -7,10 +7,10 @@ import loadingCube from '../../assets/loadingCube.json';
 
 export function LoadAnimation() {
     return (
-        <Box justifyContent={'center'} alignItems={'center'} >
+        <Box flex={1} justifyContent={'center'} alignItems={'center'} >
             <LottieView
                 source={loadingCube}
-                style={{ height: 200 }}
+                style={{ height: 250 }}
                 resizeMode="contain"
                 autoPlay
                 loop
