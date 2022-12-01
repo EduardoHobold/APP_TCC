@@ -7,6 +7,10 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "cover"
+    },
     "ios": {
       "bundleIdentifier": "com.eduardohobold.apptcc",
       "buildNumber": "1.0.0"

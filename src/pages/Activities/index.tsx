@@ -151,17 +151,16 @@ export function Activities() {
 
     async function saveNewAtivity() {
         const realm = await getRealm();
-        if (realm) {
-            try {
-                realm.write(() => {
-                    realm.create('Activities', obj);
-                });
-            } catch {
-                Alert.alert('Não foi possível concluir a atividade');
-            } finally {
-                realm.close();
-                setIsOpen(!isOpen);
-            }
+
+        try {
+            realm.write(() => {
+                realm.create('Activities', obj);
+            });
+        } catch {
+            Alert.alert('Não foi possível concluir a atividade');
+        } finally {
+            realm.close();
+            setIsOpen(!isOpen);
         }
     }
 
