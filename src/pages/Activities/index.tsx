@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Text, Box, Button, Center, Progress, IconButton, AlertDialog } from "native-base";
-import { Alert, FlatList, Platform } from 'react-native';
+import { Alert, FlatList, Platform, BackHandler } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 import * as Speech from 'expo-speech';
@@ -55,6 +55,13 @@ export function Activities() {
         navigation.getParent()?.setOptions({ tabBarStyle: { display: 'none' } })
         nivel !== 2 ? generateList() : generateListColors();
         startTimer();
+    }, []);
+
+    //Bloquear a volta para a tela Home, utilizando somente a função que a tela fornece
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', () => {
+            return true;
+        })
     }, []);
 
     function handleBack() {

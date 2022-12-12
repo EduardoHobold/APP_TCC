@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StatusBar } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StatusBar, BackHandler } from 'react-native';
 import { Box, Text, IconButton, Center, Avatar, ScrollView, AlertDialog, Button } from "native-base";
 import { useNavigation } from '@react-navigation/native';
 
@@ -23,6 +23,13 @@ export function Home() {
         navigation.navigate('Atividades', { nivel: nivel, user: user.id });
         onClose();
     }
+
+    //Bloquear a função do celular de voltar para a tela de login
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', () => {
+            return true;
+        })
+    }, []);
 
     return (
         <Center>
