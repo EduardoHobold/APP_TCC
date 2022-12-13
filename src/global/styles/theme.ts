@@ -25,6 +25,7 @@ export const customTheme = extendTheme({
         bold: 'Poppins_700Bold'
     },
     config: {
+        initialColorMode: 'light',
         dependencies: {
             'linear-gradient': LinearGradient
         }

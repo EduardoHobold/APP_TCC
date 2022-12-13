@@ -12,6 +12,7 @@ import { SvgProps } from 'react-native-svg';
 import { Entypo, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { geometricShapes, colorList } from '../../utils/geometricShapes';
+import moment, { Moment } from 'moment';
 
 interface IGeometricShape {
     id: string;
@@ -51,10 +52,16 @@ export function Activities() {
     const cancelRef = React.useRef(null);
     const onClose = () => setIsOpen(false);
 
+    const [startTime, setStartTime] = useState<Moment>();
+    var endTime: Moment;
+
+
     useEffect(() => {
         navigation.getParent()?.setOptions({ tabBarStyle: { display: 'none' } })
         nivel !== 2 ? generateList() : generateListColors();
-        startTimer();
+        // startTimer();
+        setStartTime(moment(new Date()));
+        // startTime = moment(new Date());
     }, []);
 
     //Bloquear a volta para a tela Home, utilizando somente a função que a tela fornece
@@ -177,38 +184,39 @@ export function Activities() {
         obj.correct = nivel !== 2 ? (question?.id === item.id ? obj.correct + 1 : obj.correct) : (question?.color === item.color ? obj.correct + 1 : obj.correct);
         obj.wrong = nivel !== 2 ? (question?.id !== item.id ? obj.wrong + 1 : obj.wrong) : (question?.color !== item.color ? obj.wrong + 1 : obj.wrong);
 
-        stopTimer();
-        obj.time = obj.time + countSeconds;
+        endTime = moment(new Date());
+        obj.time = obj.time + endTime?.diff(startTime, 'seconds');
 
         setProgress(progress + 10);
 
         if ((obj.correct + obj.wrong) < 10) {
             nivel !== 2 ? generateList() : generateListColors();
-            startTimer();
+            
+            setStartTime(moment(new Date()));
         } else {
             obj.time = obj.time / 10;
             obj.date = new Date();
             saveNewAtivity();
         }
 
-        console.log('obj', obj);
+        // console.log('obj', obj);
     }
 
     // Funções para controle do contador de tempo
-    const startTimer = () => {
-        setCountSeconds(0);
-        setCustomInterval(
-            setInterval(() => {
-                setCountSeconds((value) => value + 1)
-            }, 1000)
-        )
-    }
+    // const startTimer = () => {
+    //     setCountSeconds(0);
+    //     setCustomInterval(
+    //         setInterval(() => {
+    //             setCountSeconds((value) => value + 1)
+    //         }, 1000)
+    //     )
+    // }
 
-    const stopTimer = () => {
-        if (customInterval) {
-            clearInterval(customInterval);
-        }
-    }
+    // const stopTimer = () => {
+    //     if (customInterval) {
+    //         clearInterval(customInterval);
+    //     }
+    // }
 
     // Função que reproduz o som da figura
     function speak(text: string) {
